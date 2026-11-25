@@ -1,0 +1,60 @@
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: clamp(40px, 6vw, 64px);
+  max-width: 720px;
+}
+
+.section-heading.align-center {
+  align-items: center;
+  text-align: center;
+  margin-inline: auto;
+}
+
+.section-index {
+  color: var(--text-3);
+}
+
+.section-title {
+  font-size: clamp(2.1rem, 5.5vw, 3.6rem);
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.28em;
+}
+
+.align-center .section-title {
+  justify-content: center;
+}
+
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.word {
+  display: inline-block;
+}
+
+.section-subtitle {
+  color: var(--text-2);
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  max-width: 560px;
+}
+
+/* shared by TiltCard */
+.tilt-spotlight {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+*:hover > .tilt-spotlight {
+  opacity: 1;
+}

@@ -1,0 +1,380 @@
+/* ===== iPhone Dynamic-Island navigation =====
+   Desktop (mouse): opens on hover, closes when the pointer leaves.
+   Touch: opens on tap, closes on link tap / outside tap / scroll.
+   Hover rule: anything that gets a hover background gets a border of the SAME colour. */
+
+.island-wrap {
+  position: fixed;
+  top: max(10px, env(safe-area-inset-top));
+  left: 0;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  justify-content: center;
+  padding-inline: 10px;
+  pointer-events: none;
+}
+
+.island {
+  --hover-bg: rgba(255, 255, 255, 0.09);
+  --active-bg: rgba(255, 255, 255, 0.16);
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  max-width: calc(100vw - 20px);
+  background: var(--island-bg);
+  border: 1px solid var(--island-bg);
+  color: #f2f3f3;
+  box-shadow: 0 10px 34px -12px rgba(0, 0, 0, 0.55);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.4s var(--ease);
+}
+
+.island.is-compact:hover {
+  background: var(--island-bg-hover);
+  border-color: var(--island-bg-hover);
+  box-shadow: 0 14px 38px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Compact pill ---------- */
+.island-compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 8px 0 6px;
+  color: inherit;
+  white-space: nowrap;
+}
+
+/* avatar logo */
+.island-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
+.island-mark.big {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+}
+
+.island-avatar-btn {
+  display: block;
+  padding: 0;
+  border-radius: 12px;
+  cursor: zoom-in;
+}
+
+.island-avatar-btn:focus-visible {
+  outline: 2px solid var(--island-accent);
+  outline-offset: 2px;
+}
+
+.island-label {
+  display: grid;
+  min-width: 64px;
+  overflow: hidden;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+.island-label > span {
+  grid-area: 1 / 1;
+}
+
+.island-ring {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  rotate: -90deg;
+}
+
+.ring-track,
+.ring-fill {
+  fill: none;
+  stroke-width: 2.8;
+}
+
+.ring-track {
+  stroke: rgba(255, 255, 255, 0.14);
+}
+
+.ring-fill {
+  stroke: var(--island-accent);
+  stroke-linecap: round;
+}
+
+/* ---------- Expanded: inline bar ---------- */
+.island-expanded {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+}
+
+.island-head {
+  display: flex;
+  align-items: center;
+}
+
+.island-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+}
+
+.island-brand .island-mark {
+  transition: transform 0.4s var(--ease);
+}
+
+.island-avatar-btn:hover .island-mark {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.island-name {
+  display: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.island-dot {
+  color: var(--island-accent);
+}
+
+.island-links {
+  list-style: none;
+  display: flex;
+  gap: 2px;
+  margin-inline: 4px;
+}
+
+.island-links a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px clamp(9px, 1.1vw, 13px);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(242, 243, 243, 0.62);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.island-links a:hover,
+.island-links a:focus-visible,
+.island-links a.is-active {
+  color: #fff;
+}
+
+.link-hover,
+.link-active {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* border = same colour as the background it outlines */
+.link-hover {
+  background: var(--hover-bg);
+  border: 1px solid var(--hover-bg);
+}
+
+.link-active {
+  background: var(--active-bg);
+  border: 1px solid var(--active-bg);
+}
+
+.link-icon,
+.link-text {
+  position: relative;
+  z-index: 1;
+}
+
+.link-icon {
+  display: none;
+  font-size: 1rem;
+  transition: transform 0.35s var(--ease), color 0.25s ease;
+}
+
+.island-links a.is-active .link-icon {
+  color: var(--island-accent);
+}
+
+.island-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.island-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: rgba(242, 243, 243, 0.75);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.92rem;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.island-icon:hover {
+  color: #fff;
+  background: var(--active-bg);
+  border-color: var(--active-bg);
+}
+
+.close-mobile {
+  display: none;
+}
+
+/* "Hire me": taller than the link pills so it stands out */
+.island-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  margin-block: -2px;
+  border-radius: 999px;
+  background: #f2f3f3;
+  border: 1px solid #f2f3f3;
+  color: #111;
+  font-weight: 600;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.3s ease, border-color 0.3s ease, translate 0.3s var(--ease), box-shadow 0.3s ease;
+}
+
+.island-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--fill-solid);
+  clip-path: circle(0% at 50% 100%);
+  transition: clip-path 0.5s var(--ease);
+}
+
+.island-cta:hover {
+  color: #fff;
+  border-color: var(--fill-solid);
+  translate: 0 -1px;
+  box-shadow: 0 8px 20px -8px var(--fill-solid);
+}
+
+.island-cta:hover::before {
+  clip-path: circle(150% at 50% 100%);
+}
+
+.island-cta svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.island-cta:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* ---------- Large tablets / small laptops: tighter bar ---------- */
+@media (max-width: 1024px) and (min-width: 761px) {
+  .island-links a {
+    padding: 7px 9px;
+    font-size: 0.8rem;
+  }
+  .island-cta {
+    padding: 0 12px;
+  }
+}
+
+/* ---------- Phones & portrait tablets: expanded island becomes a card ---------- */
+@media (max-width: 760px) {
+  .island-expanded {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: min(calc(100vw - 20px), 380px);
+    padding: 12px;
+  }
+  .island-head {
+    justify-content: space-between;
+  }
+  .island-name {
+    display: inline;
+  }
+  .close-mobile {
+    display: grid;
+  }
+  .close-desktop {
+    display: none;
+  }
+  .island-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 0;
+  }
+  .island-links a {
+    padding: 12px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .link-icon {
+    display: block;
+  }
+  .island-links a:hover .link-icon {
+    transform: scale(1.15) rotate(-8deg);
+  }
+  .island-actions {
+    gap: 8px;
+  }
+  .island-actions .island-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.05rem;
+  }
+  .island-cta {
+    flex: 1;
+    height: 46px;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+}
+
+/* ---------- Very small phones ---------- */
+@media (max-width: 360px) {
+  .island-compact {
+    height: 36px;
+    gap: 6px;
+  }
+  .island-mark {
+    width: 30px;
+    height: 30px;
+  }
+  .island-label {
+    min-width: 56px;
+    font-size: 0.76rem;
+  }
+  .island-expanded {
+    padding: 10px;
+  }
+  .island-links a {
+    padding: 10px;
+    gap: 6px;
+    font-size: 0.86rem;
+  }
+}

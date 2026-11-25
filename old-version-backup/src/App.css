@@ -1,0 +1,29 @@
+/* Main content wrapper for sidebar layout */
+.App {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-right: 80px; /* Width of navbar + spacing */
+  margin-left: 0;
+  width: calc(100% - 80px);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Smooth scroll for sections */
+section {
+  scroll-margin-top: 2rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .App {
+    flex-direction: column;
+  }
+  
+  .main-content {
+    width: 100%;
+  }
+}

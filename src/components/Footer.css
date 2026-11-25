@@ -1,0 +1,142 @@
+.footer {
+  position: relative;
+  border-top: 1px solid var(--border);
+  padding-block: clamp(60px, 10vw, 100px) 32px;
+  overflow: hidden;
+}
+
+.footer-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: clamp(48px, 8vw, 80px);
+}
+
+.footer-cta-small {
+  color: var(--text-2);
+  font-size: 1rem;
+}
+
+.footer-cta-big {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3rem, 12vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  background: linear-gradient(90deg, var(--text) 0%, var(--text) 50%, transparent 50%), var(--grad);
+  background-size: 200% 100%, 100% 100%;
+  background-position: 0% 0, 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position 0.7s var(--ease);
+}
+
+.footer-cta:hover .footer-cta-big {
+  background-position: 100% 0, 0 0;
+}
+
+.footer-cta-arrow {
+  display: grid;
+  color: var(--accent);
+  font-size: 0.7em;
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 28px;
+  border-block: 1px solid var(--border);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-brand .logo-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  transition: transform 0.4s var(--ease);
+}
+
+.logo-mark-btn {
+  display: block;
+  padding: 0;
+  border-radius: 16px;
+  cursor: zoom-in;
+}
+
+.logo-mark-btn:hover .logo-mark {
+  transform: rotate(-6deg) scale(1.06);
+}
+
+.logo-mark-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.footer-brand p {
+  font-size: 0.85rem;
+  color: var(--text-3);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+}
+
+.footer-links a {
+  color: var(--text-2);
+  font-size: 0.92rem;
+  transition: color 0.25s ease;
+}
+
+.footer-links a:hover {
+  color: var(--text);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 24px;
+  padding-right: 64px; /* keep clear of the back-to-top button */
+  font-size: 0.82rem;
+  color: var(--text-3);
+}
+
+.powered-by a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.25s ease;
+}
+
+.powered-by a:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .footer-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

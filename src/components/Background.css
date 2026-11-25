@@ -1,0 +1,55 @@
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0 0 -30% 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+}
+
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.blob-1 {
+  width: 60vmax;
+  height: 60vmax;
+  top: -25vmax;
+  left: -15vmax;
+  background: radial-gradient(circle, var(--blob-1), transparent 65%);
+}
+
+.blob-2 {
+  width: 55vmax;
+  height: 55vmax;
+  top: 10vh;
+  right: -25vmax;
+  background: radial-gradient(circle, var(--blob-2), transparent 65%);
+}
+
+.blob-3 {
+  width: 50vmax;
+  height: 50vmax;
+  bottom: -30vmax;
+  left: 20vw;
+  background: radial-gradient(circle, var(--blob-3), transparent 65%);
+}
+
+.bg-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}

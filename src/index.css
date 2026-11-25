@@ -1,0 +1,386 @@
+/* ============ Design tokens ============ */
+/* Dark palette: #37353E (base) · #44444E (surface) · #715A5A (rose) · #D3DAD9 (text)
+   --accent is a lighter tint of #715A5A so small accent text stays readable on #37353E. */
+:root,
+:root[data-theme='dark'] {
+  --bg: #37353e;
+  --bg-elev: #44444e;
+  --surface: rgba(68, 68, 78, 0.6);
+  --surface-2: rgba(113, 90, 90, 0.3);
+  --border: rgba(211, 218, 217, 0.1);
+  --border-strong: rgba(211, 218, 217, 0.22);
+  --text: #d3dad9;
+  --text-2: #a9aeaf;
+  --text-3: #8d9194;
+  --accent: #c4a3a3;
+  --accent-2: #715a5a;
+  --accent-ink: #37353e;
+  /* --grad is for gradient TEXT; --grad-fill is for backgrounds behind white text */
+  --grad: linear-gradient(115deg, #d3dad9 0%, #c4a3a3 55%, #a07c7c 100%);
+  --grad-fill: linear-gradient(115deg, #8a6c6c 0%, #715a5a 55%, #5c4949 100%);
+  --ring: conic-gradient(from 0deg, #715a5a, #d3dad9, #44444e, #c4a3a3, #715a5a);
+  --glow: 0 0 0 1px rgba(196, 163, 163, 0.25), 0 20px 60px -20px rgba(113, 90, 90, 0.6);
+  --shadow: 0 30px 60px -30px rgba(18, 17, 22, 0.75);
+  --grid-line: rgba(211, 218, 217, 0.05);
+  --blob-1: rgba(113, 90, 90, 0.4);
+  --blob-2: rgba(68, 68, 78, 0.9);
+  --blob-3: rgba(113, 90, 90, 0.25);
+  --nav-bg: rgba(55, 53, 62, 0.75);
+  --island-bg: #121115;
+  --island-accent: #c4a3a3;
+  --island-bg-hover: #1f1d24;
+  --fill-solid: #715a5a;
+  --shine: rgba(255, 255, 255, 0.35);
+  color-scheme: dark;
+}
+
+/* Light palette: #071B2B (ink) · #167D8D (teal) · #B9E4E8 (mist) · #EEEEEE (paper) */
+:root[data-theme='light'] {
+  --bg: #eeeeee;
+  --bg-elev: #f7f7f7;
+  --surface: rgba(255, 255, 255, 0.55);
+  --surface-2: rgba(185, 228, 232, 0.55);
+  --border: rgba(7, 27, 43, 0.1);
+  --border-strong: rgba(7, 27, 43, 0.2);
+  --text: #071b2b;
+  --text-2: #3b4f5e;
+  --text-3: #66798a;
+  --accent: #167d8d;
+  --accent-2: #071b2b;
+  --accent-ink: #ffffff;
+  --grad: linear-gradient(115deg, #167d8d 0%, #11606f 50%, #071b2b 100%);
+  --grad-fill: linear-gradient(115deg, #167d8d 0%, #11606f 50%, #071b2b 100%);
+  --ring: conic-gradient(from 0deg, #167d8d, #b9e4e8, #071b2b, #b9e4e8, #167d8d);
+  --glow: 0 0 0 1px rgba(22, 125, 141, 0.25), 0 20px 50px -20px rgba(22, 125, 141, 0.45);
+  --shadow: 0 30px 60px -35px rgba(7, 27, 43, 0.35);
+  --grid-line: rgba(7, 27, 43, 0.05);
+  --blob-1: rgba(185, 228, 232, 0.85);
+  --blob-2: rgba(22, 125, 141, 0.14);
+  --blob-3: rgba(185, 228, 232, 0.6);
+  --nav-bg: rgba(247, 247, 247, 0.78);
+  --island-bg: #071b2b;
+  --island-accent: #b9e4e8;
+  --island-bg-hover: #0d2a40;
+  --fill-solid: #167d8d;
+  --shine: rgba(185, 228, 232, 0.45);
+  color-scheme: light;
+}
+
+:root {
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --container: 1180px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============ Base ============ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+
+/* cards that slide in from the side must never widen the page on phones */
+main {
+  overflow-x: clip;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-2);
+  border: 2px solid var(--bg);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* ============ Layout utilities ============ */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(80px, 12vw, 140px);
+}
+
+.gradient-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ============ Buttons ============ */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease),
+    box-shadow 0.4s var(--ease),
+    translate 0.35s var(--ease),
+    scale 0.2s var(--ease);
+}
+
+.btn svg {
+  font-size: 1.1em;
+  flex-shrink: 0;
+  transition: transform 0.35s var(--ease);
+}
+
+/* Hover: lift + light sweep across the button + icon nudge.
+   Uses the `translate`/`scale` properties so it composes with Framer Motion transforms. */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, var(--shine), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: left 0.75s var(--ease);
+}
+
+.btn:hover {
+  translate: 0 -3px;
+}
+
+.btn:hover::after {
+  left: 130%;
+}
+
+.btn:hover svg {
+  transform: translate(2px, -2px) rotate(-6deg);
+}
+
+.btn:active {
+  translate: 0 0;
+  scale: 0.97;
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--grad-fill);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  box-shadow: var(--glow);
+}
+
+.btn-ghost {
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: inset 0 0 0 0 var(--surface-2);
+}
+
+/* ghost buttons fill up from the bottom */
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow:
+    inset 0 -60px 0 0 var(--surface-2),
+    0 12px 30px -14px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 1.05rem;
+  transition:
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    translate 0.3s var(--ease);
+}
+
+.icon-btn svg {
+  transition: transform 0.35s var(--ease);
+}
+
+.icon-btn:hover {
+  translate: 0 -3px;
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--surface-2);
+  box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.icon-btn:hover svg {
+  transform: scale(1.12) rotate(-8deg);
+}
+
+/* Text links with an underline that grows from the left */
+.link-underline {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.4s var(--ease), color 0.25s ease;
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
